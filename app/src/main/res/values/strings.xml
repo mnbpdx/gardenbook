@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Garden Book</string>
+    <string name="add_icon_content_description">check mark icon</string>
+    <string name="star_icon_content_description">star icon</string>
+    <string name="search_icon_content_description">search icon</string>
+    <string name="leaf_image_content_description">leaf icon</string>
 </resources>

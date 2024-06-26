@@ -1,0 +1,63 @@
+package com.mnbpdx.gardenbook.ui
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.mnbpdx.gardenbook.R
+
+@Composable
+internal fun GardenBookBottomAppBar(
+    isSelected: Boolean
+) {
+    NavigationBar {
+        NavigationBarItem(
+            selected = isSelected,
+            onClick = { /*TODO*/ },
+            icon = {
+                Icon(
+                    imageVector = Icons.Filled.Done,
+                    contentDescription = stringResource(R.string.add_icon_content_description)
+                )
+            }
+        )
+        NavigationBarItem(
+            selected = isSelected,
+            onClick = { /*TODO*/ },
+            icon = {
+                Icon(
+                    imageVector = Icons.Filled.Star,
+                    contentDescription = stringResource(R.string.star_icon_content_description)
+                )
+            }
+        )
+        NavigationBarItem(
+            selected = isSelected,
+            onClick = { /*TODO*/ },
+            icon = {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = stringResource(R.string.search_icon_content_description)
+                )
+            }
+        )
+    }
+}
+
+@ExperimentalMaterial3Api
+@Composable
+internal fun GardenBookTopAppBar() {
+    TopAppBar(
+        title = {
+            Text(text = stringResource(R.string.app_name))
+        },
+    )
+}
