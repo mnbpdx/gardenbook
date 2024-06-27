@@ -1,4 +1,4 @@
-package com.mnbpdx.gardenbook.ui
+package com.mnbpdx.gardenbook.ui.loading
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -20,7 +20,7 @@ import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
 @Composable
 internal fun LoadingScreen() {
     Surface(modifier = Modifier.fillMaxSize()) {
-        Box {
+        Box { // TODO: this box is actually unnecessary
             Column(
                 modifier = Modifier.align(Alignment.Center),
                 horizontalAlignment = Alignment.CenterHorizontally

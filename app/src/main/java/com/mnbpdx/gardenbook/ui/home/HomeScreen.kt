@@ -1,7 +1,7 @@
-package com.mnbpdx.gardenbook.ui
+package com.mnbpdx.gardenbook.ui.home
 
-import android.graphics.Paint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,11 +26,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mnbpdx.gardenbook.R
+import com.mnbpdx.gardenbook.ui.GardenBookBottomAppBar
+import com.mnbpdx.gardenbook.ui.GardenBookTopAppBar
 import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
 
 @ExperimentalMaterial3Api
 @Composable
-internal fun HomeScreen() {
+internal fun HomeScreen(
+//    viewModel: HomeScreenViewModel = viewModel(),
+    onPlantCardPress: () -> Unit,
+) {
+    GardenBookTheme {
+        HomeScreenContent(onPlantCardPress = onPlantCardPress)
+    }
+}
+
+@ExperimentalMaterial3Api
+@Composable
+internal fun HomeScreenContent(
+    onPlantCardPress: () -> Unit
+) {
     Scaffold(
         topBar = { GardenBookTopAppBar() },
         bottomBar = { GardenBookBottomAppBar(isSelected = true) }
@@ -56,8 +71,14 @@ internal fun HomeScreen() {
                 )
 
                 plants.map { plant ->
-                Spacer(modifier = Modifier.height(16.dp))
-                    BasicPlantCard(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
+                    PlantCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        name = plant,
+                        onPress = onPlantCardPress
+                    )
                 }
 
 
@@ -66,10 +87,17 @@ internal fun HomeScreen() {
     }
 }
 
+// THE definition of PlantCard
 @Composable
-private fun BasicPlantCard(modifier: Modifier = Modifier) {
-    Card(modifier = modifier) {
-        Surface {
+private fun PlantCard(
+    modifier: Modifier = Modifier,
+    name: String,
+    onPress: () -> Unit,
+) {
+    Card(
+        modifier = modifier.clickable { onPress() },
+    ) {
+        Surface { // TODO: duplicate surface, consider removing
             Row {
                 Image(
                     modifier = Modifier.weight(.33f),
@@ -83,7 +111,7 @@ private fun BasicPlantCard(modifier: Modifier = Modifier) {
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        text = "plant name",
+                        text = name,
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.headlineLarge
                     )
@@ -105,6 +133,6 @@ private fun BasicPlantCard(modifier: Modifier = Modifier) {
 @Composable
 private fun HomeScreenPreview() {
     GardenBookTheme {
-        HomeScreen()
+        HomeScreenContent(onPlantCardPress = { })
     }
 }
