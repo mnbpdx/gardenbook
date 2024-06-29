@@ -7,11 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.material3.ExperimentalMaterial3Api
 import com.mnbpdx.gardenbook.ui.Destination
-import com.mnbpdx.gardenbook.ui.home.HomeScreen
-import com.mnbpdx.gardenbook.ui.loading.LoadingScreen
 import com.mnbpdx.gardenbook.ui.NavigationViewModel
 import com.mnbpdx.gardenbook.ui.detail.DetailScreen
+import com.mnbpdx.gardenbook.ui.home.HomeScreen
 import com.mnbpdx.gardenbook.ui.home.HomeScreenViewModel
+import com.mnbpdx.gardenbook.ui.loading.LoadingScreen
 import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,10 +31,6 @@ class MainActivity : ComponentActivity() {
             // Composables are functions, but start with capital
             // letters, like Greeting, below.
             GardenBookTheme {
-//                HomeScreen(
-//                    onPlantCardPress = navigationViewModel::navigateToDetailScreen()
-//                )
-
                 when (val destination = navigationViewModel.destination.value) {
                     is Destination.LoadingScreen -> LoadingScreen()
                     is Destination.HomeScreen -> {

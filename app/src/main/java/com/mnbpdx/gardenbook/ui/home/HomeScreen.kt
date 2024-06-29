@@ -1,6 +1,7 @@
 package com.mnbpdx.gardenbook.ui.home
 
-import android.content.res.Resources.Theme
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.content.res.Configuration.UI_MODE_TYPE_NORMAL
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -20,11 +21,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.mnbpdx.gardenbook.R
 import com.mnbpdx.gardenbook.ui.Destination
@@ -61,14 +62,13 @@ internal fun HomeScreenContent(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize(),
-            color = MaterialTheme.colorScheme.secondary,
+            color = MaterialTheme.colorScheme.primary,
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-//                Spacer(modifier = Modifier.height(16.dp))
-//                BasicPlantCard(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp))
 
+                // Temp list
                 val plantNames: List<String> = listOf(
                     "pothos",
                     "daisy",
@@ -128,14 +128,19 @@ private fun PlantCard(
     }
 }
 
-//@Preview
-//@Composable
-//private fun BasicPlantCardPreview() {
-//    BasicPlantCard()
-//}
+@Preview
+@Composable
+private fun PlantCardPreview() {
+    GardenBookTheme {
+        PlantCard(
+            name = "pothos",
+            onPress = { }
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
+@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES or UI_MODE_TYPE_NORMAL)
 @Composable
 private fun HomeScreenPreview() {
     GardenBookTheme {

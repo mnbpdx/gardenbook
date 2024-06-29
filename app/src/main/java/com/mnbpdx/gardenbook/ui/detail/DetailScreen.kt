@@ -1,6 +1,5 @@
 package com.mnbpdx.gardenbook.ui.detail
 
-import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mnbpdx.gardenbook.ui.Destination
 import com.mnbpdx.gardenbook.ui.GardenBookTopAppBar
+import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
 
 @ExperimentalMaterial3Api
 @Composable
