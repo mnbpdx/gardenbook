@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mnbpdx.gardenbook.R
+import com.mnbpdx.gardenbook.ui.Destination
 import com.mnbpdx.gardenbook.ui.GardenBookBottomAppBar
 import com.mnbpdx.gardenbook.ui.GardenBookTopAppBar
 import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
@@ -34,19 +35,26 @@ import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
 @ExperimentalMaterial3Api
 @Composable
 internal fun HomeScreen(
-//    viewModel: HomeScreenViewModel = viewModel(),
-    onPlantCardPress: () -> Unit,
+//    viewModel: HomeScreenViewModel,
+    onPlantCardPress: (String) -> Unit,
 ) {
-    HomeScreenContent(onPlantCardPress = onPlantCardPress)
+    HomeScreenContent(
+        onPlantCardPress = onPlantCardPress
+    )
 }
 
 @ExperimentalMaterial3Api
 @Composable
 internal fun HomeScreenContent(
-    onPlantCardPress: () -> Unit
+    onPlantCardPress: (String) -> Unit,
 ) {
     Scaffold(
-        topBar = { GardenBookTopAppBar() },
+        topBar = {
+            GardenBookTopAppBar(
+                destination = Destination.HomeScreen,
+                onUpButtonPress = { }
+            )
+        },
         bottomBar = { GardenBookBottomAppBar(isSelected = true) }
     ) { paddingValues ->
         Surface(
@@ -60,8 +68,8 @@ internal fun HomeScreenContent(
             ) {
 //                Spacer(modifier = Modifier.height(16.dp))
 //                BasicPlantCard(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp))
-                
-                val plants : List<String> = listOf(
+
+                val plantNames: List<String> = listOf(
                     "pothos",
                     "daisy",
                     "tomato",
@@ -69,13 +77,13 @@ internal fun HomeScreenContent(
                     "greg",
                 )
 
-                plants.map { plant ->
+                plantNames.map { plantName ->
                     Spacer(modifier = Modifier.height(16.dp))
                     PlantCard(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp),
-                        name = plant,
+                        name = plantName,
                         onPress = onPlantCardPress
                     )
                 }
@@ -91,10 +99,10 @@ internal fun HomeScreenContent(
 private fun PlantCard(
     modifier: Modifier = Modifier,
     name: String,
-    onPress: () -> Unit,
+    onPress: (String) -> Unit,
 ) {
     Card(
-        modifier = modifier.clickable { onPress() },
+        modifier = modifier.clickable { onPress(name) },
     ) {
         Surface { // TODO: duplicate surface, consider removing
             Row {
@@ -114,7 +122,6 @@ private fun PlantCard(
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.headlineLarge
                     )
-
                 }
             }
         }

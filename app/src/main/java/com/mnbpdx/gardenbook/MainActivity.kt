@@ -11,6 +11,7 @@ import com.mnbpdx.gardenbook.ui.home.HomeScreen
 import com.mnbpdx.gardenbook.ui.loading.LoadingScreen
 import com.mnbpdx.gardenbook.ui.NavigationViewModel
 import com.mnbpdx.gardenbook.ui.detail.DetailScreen
+import com.mnbpdx.gardenbook.ui.home.HomeScreenViewModel
 import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val navigationViewModel: NavigationViewModel by viewModels()
+    private val homeScreenViewModel: HomeScreenViewModel by viewModels()
+    private val detailScreenViewModel: DetailScreenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,17 +35,20 @@ class MainActivity : ComponentActivity() {
 //                    onPlantCardPress = navigationViewModel::navigateToDetailScreen()
 //                )
 
-                when (navigationViewModel.destination.value) {
+                when (val destination = navigationViewModel.destination.value) {
                     is Destination.LoadingScreen -> LoadingScreen()
                     is Destination.HomeScreen -> {
                         HomeScreen(
-                            onPlantCardPress = navigationViewModel::navigateToDetailScreen
+                            onPlantCardPress = {
+                                plantName -> navigationViewModel.navigateToDetailScreen(plantName)
+                            },
                         )
                     }
                     is Destination.DetailScreen -> {
-//                        DetailScreen(
-//                            plant =
-//                        )
+                        DetailScreen(
+                            plantName = destination.plantName,
+                            onBackPress = navigationViewModel::navigateToHomeScreen,
+                        )
                     }
                 }
 
