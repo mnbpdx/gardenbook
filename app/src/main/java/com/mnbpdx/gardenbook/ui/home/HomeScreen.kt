@@ -1,5 +1,6 @@
 package com.mnbpdx.gardenbook.ui.home
 
+import android.content.res.Resources.Theme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -36,9 +37,7 @@ internal fun HomeScreen(
 //    viewModel: HomeScreenViewModel = viewModel(),
     onPlantCardPress: () -> Unit,
 ) {
-    GardenBookTheme {
-        HomeScreenContent(onPlantCardPress = onPlantCardPress)
-    }
+    HomeScreenContent(onPlantCardPress = onPlantCardPress)
 }
 
 @ExperimentalMaterial3Api
@@ -54,7 +53,7 @@ internal fun HomeScreenContent(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize(),
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.secondary,
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth()

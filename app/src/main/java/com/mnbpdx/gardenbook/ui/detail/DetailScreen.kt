@@ -1,5 +1,5 @@
 package com.mnbpdx.gardenbook.ui.detail
-
+import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,23 +19,26 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun DetailScreen(plant: String) {
-    Surface(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier.fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
-        ) {
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = plant,
-                style = MaterialTheme.typography.headlineLarge,
-            )
-        }
+        Surface(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier.fillMaxHeight(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top,
+            ) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = plant,
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.headlineLarge,
+                )
+            }
     }
 }
 
 @Preview
 @Composable
 private fun DetailScreenPreview() {
-    DetailScreen(plant = "Plant Name")
+    GardenBookTheme {
+        DetailScreen(plant = "Plant Name")
+    }
 }
