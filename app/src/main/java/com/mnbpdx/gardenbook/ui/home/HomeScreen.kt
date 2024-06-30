@@ -1,6 +1,7 @@
 package com.mnbpdx.gardenbook.ui.home
 
-import android.content.res.Resources.Theme
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.content.res.Configuration.UI_MODE_TYPE_NORMAL
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -20,13 +21,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.mnbpdx.gardenbook.R
+import com.mnbpdx.gardenbook.ui.Destination
 import com.mnbpdx.gardenbook.ui.GardenBookBottomAppBar
 import com.mnbpdx.gardenbook.ui.GardenBookTopAppBar
 import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
@@ -34,34 +36,40 @@ import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
 @ExperimentalMaterial3Api
 @Composable
 internal fun HomeScreen(
-//    viewModel: HomeScreenViewModel = viewModel(),
-    onPlantCardPress: () -> Unit,
+//    viewModel: HomeScreenViewModel,
+    onPlantCardPress: (String) -> Unit,
 ) {
-    HomeScreenContent(onPlantCardPress = onPlantCardPress)
+    HomeScreenContent(
+        onPlantCardPress = onPlantCardPress
+    )
 }
 
 @ExperimentalMaterial3Api
 @Composable
 internal fun HomeScreenContent(
-    onPlantCardPress: () -> Unit
+    onPlantCardPress: (String) -> Unit,
 ) {
     Scaffold(
-        topBar = { GardenBookTopAppBar() },
+        topBar = {
+            GardenBookTopAppBar(
+                destination = Destination.HomeScreen,
+                onArrowBackPress = { }
+            )
+        },
         bottomBar = { GardenBookBottomAppBar(isSelected = true) }
     ) { paddingValues ->
         Surface(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize(),
-            color = MaterialTheme.colorScheme.secondary,
+            color = MaterialTheme.colorScheme.primary,
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-//                Spacer(modifier = Modifier.height(16.dp))
-//                BasicPlantCard(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp))
-                
-                val plants : List<String> = listOf(
+
+                // Temp list
+                val plantNames: List<String> = listOf(
                     "pothos",
                     "daisy",
                     "tomato",
@@ -69,13 +77,13 @@ internal fun HomeScreenContent(
                     "greg",
                 )
 
-                plants.map { plant ->
+                plantNames.map { plantName ->
                     Spacer(modifier = Modifier.height(16.dp))
                     PlantCard(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp),
-                        name = plant,
+                        name = plantName,
                         onPress = onPlantCardPress
                     )
                 }
@@ -91,10 +99,10 @@ internal fun HomeScreenContent(
 private fun PlantCard(
     modifier: Modifier = Modifier,
     name: String,
-    onPress: () -> Unit,
+    onPress: (String) -> Unit,
 ) {
     Card(
-        modifier = modifier.clickable { onPress() },
+        modifier = modifier.clickable { onPress(name) },
     ) {
         Surface { // TODO: duplicate surface, consider removing
             Row {
@@ -114,21 +122,25 @@ private fun PlantCard(
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.headlineLarge
                     )
-
                 }
             }
         }
     }
 }
 
-//@Preview
-//@Composable
-//private fun BasicPlantCardPreview() {
-//    BasicPlantCard()
-//}
+@Preview
+@Composable
+private fun PlantCardPreview() {
+    GardenBookTheme {
+        PlantCard(
+            name = "pothos",
+            onPress = { }
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
+@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES or UI_MODE_TYPE_NORMAL)
 @Composable
 private fun HomeScreenPreview() {
     GardenBookTheme {
