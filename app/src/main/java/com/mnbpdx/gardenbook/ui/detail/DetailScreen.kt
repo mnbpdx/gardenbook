@@ -47,7 +47,7 @@ internal fun DetailScreenContent(
     Scaffold(
         topBar = {
             GardenBookTopAppBar(
-                destination = Destination.DetailScreen(plantName), onUpButtonPress = onUpButtonPress
+                destination = Destination.DetailScreen(plantName), onArrowBackPress = onArrowBackPress
             )
         },
     ) { paddingValues ->
