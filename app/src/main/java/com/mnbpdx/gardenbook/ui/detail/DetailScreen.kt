@@ -34,7 +34,7 @@ internal fun DetailScreen(
     }
 
     DetailScreenContent(
-        plantName = plantName, onUpButtonPress = onBackPress
+        plantName = plantName, onArrowBackPress = onBackPress
     )
 }
 
