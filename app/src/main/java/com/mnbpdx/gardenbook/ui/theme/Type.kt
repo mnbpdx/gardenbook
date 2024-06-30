@@ -15,7 +15,7 @@ val provider = GoogleFont.Provider(
 
 val bodyFontFamily = FontFamily(
     Font(
-        googleFont = GoogleFont(name = "Cutive"),
+        googleFont = GoogleFont("Cutive"),
         fontProvider = provider,
     )
 )
