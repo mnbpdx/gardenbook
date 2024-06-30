@@ -42,7 +42,7 @@ internal fun DetailScreen(
 @Composable
 internal fun DetailScreenContent(
     plantName: String,
-    onUpButtonPress: () -> Unit,
+    onArrowBackPress: () -> Unit,
 ) {
     Scaffold(
         topBar = {
