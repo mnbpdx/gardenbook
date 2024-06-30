@@ -70,7 +70,7 @@ internal fun GardenBookTopAppBar(
                 Destination.HomeScreen -> {}
 
                 is Destination.DetailScreen -> {
-                    IconButton(onClick = onUpButtonPress) {
+                    IconButton(onClick = onArrowBackPress) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.add_icon_content_description)
