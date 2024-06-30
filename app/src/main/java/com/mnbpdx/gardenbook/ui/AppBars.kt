@@ -59,7 +59,7 @@ internal fun GardenBookBottomAppBar(
 @Composable
 internal fun GardenBookTopAppBar(
     destination: Destination,
-    onUpButtonPress: () -> Unit,
+    onArrowBackPress: () -> Unit,
 ) {
     TopAppBar(
         title = {
