@@ -53,7 +53,7 @@ internal fun HomeScreenContent(
         topBar = {
             GardenBookTopAppBar(
                 destination = Destination.HomeScreen,
-                onUpButtonPress = { }
+                onArrowBackPress = { }
             )
         },
         bottomBar = { GardenBookBottomAppBar(isSelected = true) }
