@@ -80,7 +80,7 @@ private fun DetailScreenPreview() {
     GardenBookTheme {
         DetailScreenContent(
             plantName = "Plant Name",
-            onUpButtonPress = {},
+            onArrowBackPress = {},
         )
     }
 }
