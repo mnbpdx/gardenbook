@@ -28,7 +28,7 @@ internal fun GardenBookBottomAppBar(
             icon = {
                 Icon(
                     imageVector = Icons.Filled.Done,
-                    contentDescription = stringResource(R.string.add_icon_content_description)
+                    contentDescription = stringResource(R.string.check_mark_icon_content_description)
                 )
             }
         )
@@ -73,7 +73,7 @@ internal fun GardenBookTopAppBar(
                     IconButton(onClick = onArrowBackPress) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.add_icon_content_description)
+                            contentDescription = stringResource(R.string.arrow_back_icon_content_description)
                         )
                     }
                 }
