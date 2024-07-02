@@ -4,22 +4,27 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.content.res.Configuration.UI_MODE_TYPE_NORMAL
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -62,7 +67,9 @@ internal fun HomeScreenContent(
                 onArrowBackPress = { }
             )
         },
-        bottomBar = { GardenBookBottomAppBar(isSelected = true) }
+        bottomBar = { GardenBookBottomAppBar(isSelected = true) },
+        floatingActionButton = { AddPlantFAB() },
+        floatingActionButtonPosition = FabPosition.End
     ) { paddingValues ->
         Surface(
             modifier = Modifier
@@ -85,6 +92,25 @@ internal fun HomeScreenContent(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun AddPlantFAB() {
+    Button(
+        modifier = Modifier.size(64.dp),
+        contentPadding = PaddingValues(0.dp),
+        onClick = {/*TODO*/ },
+        shape = CircleShape,
+        colors = ButtonDefaults.buttonColors()
+            .copy(containerColor = MaterialTheme.colorScheme.onPrimary),
+    ) {
+        Icon(
+            modifier = Modifier.size(128.dp),
+            tint = MaterialTheme.colorScheme.primary,
+            imageVector = Icons.Filled.Add,
+            contentDescription = stringResource(R.string.add_icon_content_description)
+        )
     }
 }
 
@@ -143,4 +169,13 @@ private fun HomeScreenPreview() {
     GardenBookTheme {
         HomeScreenContent(onPlantCardPress = { })
     }
+}
+
+@Preview(name = "AddPlantFABPreview")
+@Composable
+private fun AddPlantFABPreview() {
+    GardenBookTheme {
+        AddPlantFAB()
+    }
+
 }

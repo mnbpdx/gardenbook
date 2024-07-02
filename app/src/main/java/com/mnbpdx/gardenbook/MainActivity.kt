@@ -1,11 +1,13 @@
 package com.mnbpdx.gardenbook
 
+import android.Manifest
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.platform.LocalContext
 import com.mnbpdx.gardenbook.ui.Destination
 import com.mnbpdx.gardenbook.ui.NavigationViewModel
 import com.mnbpdx.gardenbook.ui.detail.DetailScreen

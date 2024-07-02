@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Access user's coarse location. Can also enable _FINE_ location for high resolution data. -->
     <application
         android:name=".ui.GardenBookApplication"
         android:allowBackup="true"
@@ -25,5 +25,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
