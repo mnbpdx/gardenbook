@@ -2,7 +2,6 @@ package com.mnbpdx.gardenbook.ui
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
@@ -73,7 +72,7 @@ internal fun GardenBookTopAppBar(
                     IconButton(onClick = onArrowBackPress) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.add_icon_content_description)
+                            contentDescription = stringResource(R.string.up_icon_content_description) // TODO: double check that that's what this is called
                         )
                     }
                 }
