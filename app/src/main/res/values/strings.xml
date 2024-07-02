@@ -4,4 +4,5 @@
     <string name="star_icon_content_description">star icon</string>
     <string name="search_icon_content_description">search icon</string>
     <string name="leaf_image_content_description">leaf icon</string>
+    <string name="up_icon_content_description">up icon</string>
 </resources>
