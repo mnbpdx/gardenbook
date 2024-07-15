@@ -61,6 +61,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.adapters)
+    implementation(libs.androidx.room.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -70,6 +73,21 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
+
+    implementation(libs.retrofit.core)
+//            implementation libs.retrofit.converter.gson
+//
+//            // OkHttp (Retrofit uses OkHttp under the hood)
+//            implementation libs.okhttp.core
+//            implementation libs.okhttp.logging.interceptor
+//
+//            // Gson for JSON parsing
+//            implementation libs.gson
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.truth)
+    testImplementation(libs.coroutines.test)
+
 }
 
 kapt {

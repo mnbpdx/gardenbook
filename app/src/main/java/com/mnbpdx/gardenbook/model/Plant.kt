@@ -1,19 +1,27 @@
 package com.mnbpdx.gardenbook.model
 
 import androidx.annotation.DrawableRes
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.mnbpdx.gardenbook.R
+import java.util.Date
 
 // Created by Claude
 // TODO: review this ai generated demo model
 
+@Entity(tableName = "plants")
 data class Plant(
-    val id: String,
+    @PrimaryKey val id: String,
     val name: String,
     val scientificName: String,
     val description: String,
-    val location: Location,
+    @Embedded val location: Location,
     val waterFrequency: Int, // in days
-    @DrawableRes val imageResourceId: Int
+    @ColumnInfo(name = "image_resource_id") @DrawableRes val imageResourceId: Int,
+    @ColumnInfo(name = "last_watered") val lastWatered: Date = Date(),
+    @ColumnInfo(name = "is_synced") val isSynced: Boolean = false
 )
 
 enum class Location {
