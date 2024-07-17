@@ -75,15 +75,6 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
     implementation(libs.retrofit.core)
-//            implementation libs.retrofit.converter.gson
-//
-//            // OkHttp (Retrofit uses OkHttp under the hood)
-//            implementation libs.okhttp.core
-//            implementation libs.okhttp.logging.interceptor
-//
-//            // Gson for JSON parsing
-//            implementation libs.gson
-
     testImplementation(libs.mockk)
     testImplementation(libs.truth)
     testImplementation(libs.coroutines.test)

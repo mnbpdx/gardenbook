@@ -37,10 +37,6 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-#retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
-#okhttp-core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
-#okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
-#gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 androidx-adapters = { group = "androidx.databinding", name = "adapters", version.ref = "adapters" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }

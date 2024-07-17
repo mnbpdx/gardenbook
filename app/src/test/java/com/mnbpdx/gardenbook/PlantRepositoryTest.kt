@@ -1,5 +1,4 @@
 import com.google.common.truth.Truth.assertThat
-import com.mnbpdx.gardenbook.data.ApiService
 import com.mnbpdx.gardenbook.data.PlantDao
 import com.mnbpdx.gardenbook.model.Location
 import com.mnbpdx.gardenbook.model.Plant
@@ -13,7 +12,6 @@ class PlantRepositoryTest {
 
     /* Mocks and Fakes*/
     private val mockPlantDao: PlantDao = mockk()
-    private val mockApiService: ApiService = mockk()
 
     private val fakePlant = Plant(
         id = "1",
@@ -30,78 +28,55 @@ class PlantRepositoryTest {
     /* System Under Test*/
     private val plantRepository = PlantRepository(
         plantDao = mockPlantDao,
-        apiService = mockApiService
     )
 
+    /* Tests */
     @Test
-    fun `getAllPlants returns flow from dao`() = runTest {
+    fun `when getAllPlants() is called, it returns flow from dao`() = runTest {
+        // Given
         val plantsFlow = flowOf(listOf(fakePlant))
-
         every { mockPlantDao.getAllPlants() } returns plantsFlow
 
+        // When
         val result = plantRepository.getAllPlants()
 
+        // Then
         assertThat(result).isEqualTo(plantsFlow)
-        verify { mockPlantDao.getAllPlants() }
     }
 
     @Test
-    fun `addPlant inserts plant and syncs`() = runTest {
-        val syncedPlant = fakePlant.copy(isSynced = true)
+    fun `when addPlant() is called, it inserts plant into dao`() = runTest {
+        // Given
+        coEvery { mockPlantDao.insertPlant(plant = fakePlant) } just runs
 
-        coEvery { mockApiService.createPlant(fakePlant) } returns syncedPlant
-        coEvery { mockPlantDao.insertPlant(any()) } just Runs
-
+        // When
         plantRepository.addPlant(plant = fakePlant)
 
-        coVerify {
-            mockPlantDao.insertPlant(fakePlant)
-            mockApiService.createPlant(fakePlant)
-            mockPlantDao.insertPlant(syncedPlant)
-        }
+        // Then
+        coVerify { mockPlantDao.insertPlant(plant = fakePlant) }
     }
 
     @Test
-    fun `updatePlant updates plant and syncs`() = runTest {
-        val syncedPlant = fakePlant.copy(isSynced = true)
+    fun `when updatePlant() is called, it updates plant in dao`() = runTest {
+        // Given
+        coEvery { mockPlantDao.updatePlant(any()) } just runs
 
-        coEvery { mockApiService.updatePlant(fakePlant.id, fakePlant) } returns syncedPlant
-        coEvery { mockPlantDao.updatePlant(any()) } just Runs
-        coEvery { mockPlantDao.insertPlant(any()) } just Runs
-
+        // When
         plantRepository.updatePlant(plant = fakePlant)
 
-        coVerify {
-            mockPlantDao.updatePlant(fakePlant)
-            mockApiService.updatePlant(fakePlant.id, fakePlant)
-            mockPlantDao.insertPlant(syncedPlant)
-        }
+        // Then
+        coVerify { mockPlantDao.updatePlant(plant = fakePlant) }
     }
 
     @Test
-    fun `deletePlant deletes plant from dao and api`() = runTest {
-        coEvery { mockPlantDao.deletePlant(any()) } just Runs
-        coEvery { mockApiService.deletePlant(any()) } just Runs
+    fun `when deletePlant() is called, it deletes plant from dao`() = runTest {
+        // Given
+        coEvery { mockPlantDao.deletePlant(any()) } just runs
 
+        // When
         plantRepository.deletePlant(plant = fakePlant)
 
-        coVerify {
-            mockPlantDao.deletePlant(fakePlant)
-            mockApiService.deletePlant(fakePlant.id)
-        }
-    }
-
-    @Test
-    fun `syncPlant handles exception`() = runTest {
-        coEvery { mockPlantDao.updatePlant(any()) } just Runs
-        coEvery { mockApiService.updatePlant(any(), any()) } throws RuntimeException("Network error")
-
-        plantRepository.updatePlant(plant = fakePlant)
-
-        coVerify {
-            mockPlantDao.updatePlant(fakePlant)
-            mockApiService.updatePlant(fakePlant.id, fakePlant)
-        }
-        coVerify(exactly = 0) { mockPlantDao.insertPlant(any()) }
+        // Then
+        coVerify { mockPlantDao.deletePlant(fakePlant) }
     }
 }
