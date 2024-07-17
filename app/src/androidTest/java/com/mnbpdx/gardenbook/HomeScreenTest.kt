@@ -4,7 +4,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.mnbpdx.gardenbook.model.plantList
-import com.mnbpdx.gardenbook.ui.home.HomeScreenContent
+import com.mnbpdx.gardenbook.ui.screens.home.HomeScreenContent
 import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
 import org.junit.Before
 import org.junit.Rule

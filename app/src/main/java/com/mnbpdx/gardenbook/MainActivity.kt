@@ -1,19 +1,18 @@
 package com.mnbpdx.gardenbook
 
-import android.Manifest
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.ui.platform.LocalContext
 import com.mnbpdx.gardenbook.ui.Destination
 import com.mnbpdx.gardenbook.ui.NavigationViewModel
-import com.mnbpdx.gardenbook.ui.detail.DetailScreen
-import com.mnbpdx.gardenbook.ui.home.HomeScreen
-import com.mnbpdx.gardenbook.ui.home.HomeScreenViewModel
-import com.mnbpdx.gardenbook.ui.loading.LoadingScreen
+import com.mnbpdx.gardenbook.ui.screens.detail.DetailScreen
+import com.mnbpdx.gardenbook.ui.screens.detail.DetailScreenViewModel
+import com.mnbpdx.gardenbook.ui.screens.home.HomeScreen
+import com.mnbpdx.gardenbook.ui.screens.home.HomeScreenViewModel
+import com.mnbpdx.gardenbook.ui.screens.loading.LoadingScreen
 import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
 import dagger.hilt.android.AndroidEntryPoint
 

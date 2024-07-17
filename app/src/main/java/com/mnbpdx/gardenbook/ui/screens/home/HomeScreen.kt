@@ -1,4 +1,4 @@
-package com.mnbpdx.gardenbook.ui.home
+package com.mnbpdx.gardenbook.ui.screens.home
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.content.res.Configuration.UI_MODE_TYPE_NORMAL

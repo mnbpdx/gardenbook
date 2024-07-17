@@ -1,4 +1,4 @@
-package com.mnbpdx.gardenbook.ui.detail
+package com.mnbpdx.gardenbook.ui.screens.detail
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -49,7 +49,8 @@ internal fun DetailScreen(
     }
 
     DetailScreenContent(
-        plantName = plantName, onArrowBackPress = onBackPress
+        plantName = plantName,
+        onArrowBackPress = onBackPress,
     )
 }
 
@@ -62,7 +63,8 @@ internal fun DetailScreenContent(
     Scaffold(
         topBar = {
             GardenBookTopAppBar(
-                destination = Destination.DetailScreen(plantName), onArrowBackPress = onArrowBackPress
+                destination = Destination.DetailScreen(plantName),
+                onArrowBackPress = onArrowBackPress,
             )
         },
     ) { paddingValues ->
@@ -88,7 +90,9 @@ internal fun DetailScreenContent(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 val images = listOf(
-                    R.drawable.leaf, R.drawable.leaf, R.drawable.westerland_climbing_rose
+                    R.drawable.leaf,
+                    R.drawable.leaf,
+                    R.drawable.westerland_climbing_rose,
                 )
                 ImageCarousel(images = images)
                 Spacer(modifier = Modifier.height(16.dp))

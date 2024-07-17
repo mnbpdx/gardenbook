@@ -1,4 +1,4 @@
-package com.mnbpdx.gardenbook.ui
+package com.mnbpdx.gardenbook.di
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
