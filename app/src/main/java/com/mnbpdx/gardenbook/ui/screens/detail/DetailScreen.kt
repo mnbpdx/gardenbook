@@ -27,6 +27,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,33 +38,49 @@ import androidx.compose.ui.unit.dp
 import com.mnbpdx.gardenbook.R
 import com.mnbpdx.gardenbook.ui.Destination
 import com.mnbpdx.gardenbook.ui.GardenBookTopAppBar
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.mnbpdx.gardenbook.ui.screens.loading.LoadingScreen
+
 
 @ExperimentalMaterial3Api
 @Composable
 internal fun DetailScreen(
-    plantName: String,
+    viewModel: DetailScreenViewModel = viewModel(),
     onBackPress: () -> Unit,
+    id: Int,
 ) {
     BackHandler {
         onBackPress()
     }
 
-    DetailScreenContent(
-        plantName = plantName,
-        onArrowBackPress = onBackPress,
-    )
+    viewModel.loadPlant(id)
+
+    when (val screenState = viewModel.screenState.collectAsState().value) {
+        is DetailScreenViewModel.ScreenState.Loading -> {
+            LoadingScreen()
+        }
+
+        is DetailScreenViewModel.ScreenState.Loaded -> {
+            DetailScreenContent(
+                screenState = screenState,
+                onArrowBackPress = onBackPress,
+            )
+        }
+
+        is DetailScreenViewModel.ScreenState.Error -> TODO("refresh screen here maybe?")
+    }
 }
 
 @ExperimentalMaterial3Api
 @Composable
 internal fun DetailScreenContent(
-    plantName: String,
+    screenState: DetailScreenViewModel.ScreenState.Loaded,
     onArrowBackPress: () -> Unit,
 ) {
     Scaffold(
         topBar = {
             GardenBookTopAppBar(
-                destination = Destination.DetailScreen(plantName),
+                destination = Destination.DetailScreen(screenState.plant.id), // TODO: ready: shouldn't be using this destination in this way. also need to switch to compose nav anyway
                 onArrowBackPress = onArrowBackPress,
             )
         },
@@ -82,7 +99,7 @@ internal fun DetailScreenContent(
                 verticalArrangement = Arrangement.Top,
             ) {
                 Text(
-                    text = plantName,
+                    text = screenState.plant.name,
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.headlineLarge,
                 )
@@ -101,7 +118,7 @@ internal fun DetailScreenContent(
                         .fillMaxWidth()
                         .padding(horizontal = 32.dp),
                     titleText = "Title",
-                    bodyText = "These changes introduce a more detailed Plant model and update the DetailScreen to use this model. Here's a summary of the changes:\n" + "\n" + "Created a Plant data class with various properties like id, name, scientific name, description, care level, water frequency, and an image resource id.\n" + "Added an enum CareLevel to represent the difficulty of caring for a plant.\n" + "Created a SamplePlantData object with a list of sample plants and a list of plant names.\n" + "Updated the DetailScreen and DetailScreenContent to use the Plant model instead of just a plant name.\n" + "Enhanced the DetailScreenContent to display more information about the plant, including its scientific name, care level, watering frequency, and description.\n" + "Updated the Preview to use a sample plant from SamplePlantData.\n" + "\n" + "These changes provide a more comprehensive and data-rich detail screen for each plant. You can further customize the layout and styling to fit your app's design.\n" + "Remember to replace the placeholder image (R.drawable.leaf) with actual plant images when you have them available. You might want to consider having multiple images per plant in the future, which would make better use of the carousel feature.",
+                    bodyText = screenState.plant.description,
                 )
             }
         }
@@ -112,10 +129,11 @@ internal fun DetailScreenContent(
 @Composable
 fun ImageCarousel(images: List<Int>) {
     val pagerState = rememberPagerState(pageCount = { images.size })
-    Box(modifier = Modifier
-        .fillMaxWidth(fraction = .66f)
-        .height(300.dp)
-        .padding(),
+    Box(
+        modifier = Modifier
+            .fillMaxWidth(fraction = .66f)
+            .height(300.dp)
+            .padding(),
         contentAlignment = Alignment.Center
     ) {
         HorizontalPager(
@@ -142,7 +160,8 @@ fun ImageCarousel(images: List<Int>) {
             horizontalArrangement = Arrangement.Center
         ) {
             repeat(images.size) { iteration ->
-                val color = if (pagerState.currentPage == iteration) MaterialTheme.colorScheme.primary else Color.LightGray
+                val color =
+                    if (pagerState.currentPage == iteration) MaterialTheme.colorScheme.primary else Color.LightGray
                 Box(
                     modifier = Modifier
                         .padding(2.dp)

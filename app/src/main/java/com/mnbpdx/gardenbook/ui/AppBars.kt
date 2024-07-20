@@ -54,11 +54,12 @@ internal fun GardenBookBottomAppBar(
     }
 }
 
+// TODO: ready: I don't love the pattern here. make it more composey and less flaggy
 @ExperimentalMaterial3Api
 @Composable
 internal fun GardenBookTopAppBar(
     destination: Destination,
-    onArrowBackPress: () -> Unit,
+    onArrowBackPress: () -> Unit = {},
 ) {
     TopAppBar(
         title = {
@@ -66,19 +67,28 @@ internal fun GardenBookTopAppBar(
         },
         navigationIcon = {
             when (destination) {
-                Destination.HomeScreen -> {}
+                Destination.HomeScreen -> { }
 
                 is Destination.DetailScreen -> {
-                    IconButton(onClick = onArrowBackPress) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.arrow_back_icon_content_description)
-                        )
-                    }
+                    BackButton(onArrowBackPress)
                 }
 
-                is Destination.LoadingScreen -> {}
+                is Destination.LoadingScreen -> { }
+
+                is Destination.AddPlantScreen -> {
+                    BackButton(onArrowBackPress)
+                }
             }
         }
     )
+}
+
+@Composable
+private fun BackButton(onArrowBackPress: () -> Unit) {
+    IconButton(onClick = onArrowBackPress) {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+            contentDescription = stringResource(R.string.arrow_back_icon_content_description)
+        )
+    }
 }

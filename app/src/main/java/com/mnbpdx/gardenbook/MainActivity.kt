@@ -8,6 +8,8 @@ import androidx.activity.viewModels
 import androidx.compose.material3.ExperimentalMaterial3Api
 import com.mnbpdx.gardenbook.ui.Destination
 import com.mnbpdx.gardenbook.ui.NavigationViewModel
+import com.mnbpdx.gardenbook.ui.screens.addplant.AddPlantScreen
+import com.mnbpdx.gardenbook.ui.screens.addplant.AddPlantViewModel
 import com.mnbpdx.gardenbook.ui.screens.detail.DetailScreen
 import com.mnbpdx.gardenbook.ui.screens.detail.DetailScreenViewModel
 import com.mnbpdx.gardenbook.ui.screens.home.HomeScreen
@@ -21,8 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val navigationViewModel: NavigationViewModel by viewModels()
-    private val homeScreenViewModel: HomeScreenViewModel by viewModels()
-    private val detailScreenViewModel: DetailScreenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,18 +32,29 @@ class MainActivity : ComponentActivity() {
             // Composables are functions, but start with capital
             // letters, like Greeting, below.
             GardenBookTheme {
+                // here we're using a when statement to determine which screen to show
+                //  based on a destination value in the navigation view model
                 when (val destination = navigationViewModel.destination.value) {
                     is Destination.LoadingScreen -> LoadingScreen()
+
                     is Destination.HomeScreen -> {
                         HomeScreen(
-                            onPlantCardPress = {
-                                plantName -> navigationViewModel.navigateToDetailScreen(plantName)
+                            onPlantCardPress = { id ->
+                                navigationViewModel.navigateToDetailScreen(id)
                             },
+                            onAddPlantPress = navigationViewModel::navigateToAddPlantScreen,
                         )
                     }
+
                     is Destination.DetailScreen -> {
                         DetailScreen(
-                            plantName = destination.plantName,
+                            onBackPress = navigationViewModel::navigateToHomeScreen,
+                            id = destination.id,
+                        )
+                    }
+
+                    is Destination.AddPlantScreen -> {
+                        AddPlantScreen(
                             onBackPress = navigationViewModel::navigateToHomeScreen,
                         )
                     }
@@ -52,6 +63,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-
 }
