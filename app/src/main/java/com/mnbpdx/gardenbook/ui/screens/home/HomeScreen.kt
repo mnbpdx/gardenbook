@@ -1,4 +1,4 @@
-package com.mnbpdx.gardenbook.ui.home
+package com.mnbpdx.gardenbook.ui.screens.home
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.content.res.Configuration.UI_MODE_TYPE_NORMAL
@@ -30,6 +30,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -38,37 +39,46 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mnbpdx.gardenbook.R
-import com.mnbpdx.gardenbook.model.plantNames
+import com.mnbpdx.gardenbook.model.Plant
+import com.mnbpdx.gardenbook.model.plantList
 import com.mnbpdx.gardenbook.ui.Destination
 import com.mnbpdx.gardenbook.ui.GardenBookBottomAppBar
 import com.mnbpdx.gardenbook.ui.GardenBookTopAppBar
 import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 @ExperimentalMaterial3Api
 @Composable
 internal fun HomeScreen(
-//    viewModel: HomeScreenViewModel,
-    onPlantCardPress: (String) -> Unit,
+    viewModel: HomeScreenViewModel = viewModel(),
+    onPlantCardPress: (Int) -> Unit,
+    onAddPlantPress: () -> Unit,
 ) {
     HomeScreenContent(
-        onPlantCardPress = onPlantCardPress
+        onPlantCardPress = onPlantCardPress,
+        onAddPlantPress = onAddPlantPress,
+        plants = viewModel.plants.collectAsState().value,
     )
 }
 
 @ExperimentalMaterial3Api
 @Composable
 internal fun HomeScreenContent(
-    onPlantCardPress: (String) -> Unit,
+    onPlantCardPress: (Int) -> Unit,
+    onAddPlantPress: () -> Unit,
+    plants: List<Plant>
 ) {
     Scaffold(
         topBar = {
             GardenBookTopAppBar(
-                destination = Destination.HomeScreen,
-                onArrowBackPress = { }
+                destination = Destination.HomeScreen
             )
         },
         bottomBar = { GardenBookBottomAppBar(isSelected = true) },
-        floatingActionButton = { AddPlantFAB() },
+        floatingActionButton = { AddPlantFAB(
+            onPress = onAddPlantPress,
+        ) },
         floatingActionButtonPosition = FabPosition.End
     ) { paddingValues ->
         Surface(
@@ -80,14 +90,16 @@ internal fun HomeScreenContent(
             LazyColumn(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                items(plantNames) { plantName ->
+                items(plants) { plant ->
                     Spacer(modifier = Modifier.height(16.dp))
                     PlantCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 8.dp),
-                        name = plantName,
+                            .padding(horizontal = 16.dp),
+                        name = plant.name,
+
                         onPress = onPlantCardPress,
+                        id = plant.id,
                     )
                 }
             }
@@ -96,11 +108,13 @@ internal fun HomeScreenContent(
 }
 
 @Composable
-private fun AddPlantFAB() {
+private fun AddPlantFAB(
+    onPress: () -> Unit
+) {
     Button(
         modifier = Modifier.size(64.dp),
         contentPadding = PaddingValues(0.dp),
-        onClick = {/*TODO*/ },
+        onClick = onPress,
         shape = CircleShape,
         colors = ButtonDefaults.buttonColors()
             .copy(containerColor = MaterialTheme.colorScheme.onPrimary),
@@ -118,13 +132,14 @@ private fun AddPlantFAB() {
 @Composable
 private fun PlantCard(
     modifier: Modifier = Modifier,
+    onPress: (Int) -> Unit,
     name: String,
-    onPress: (String) -> Unit,
+    id: Int,
 ) {
     Card(
-        modifier = modifier.clickable { onPress(name) },
+        modifier = modifier.clickable { onPress(id) },
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 16.dp
+            defaultElevation = 4.dp
         )
     ) {
         Surface { // TODO: duplicate surface, consider removing
@@ -157,7 +172,8 @@ private fun PlantCardPreview() {
     GardenBookTheme {
         PlantCard(
             name = "pothos",
-            onPress = { }
+            onPress = { },
+            id = 0,
         )
     }
 }
@@ -167,7 +183,11 @@ private fun PlantCardPreview() {
 @Composable
 private fun HomeScreenPreview() {
     GardenBookTheme {
-        HomeScreenContent(onPlantCardPress = { })
+        HomeScreenContent(
+            onPlantCardPress = { },
+            onAddPlantPress = { },
+            plants = plantList,
+        )
     }
 }
 
@@ -175,7 +195,9 @@ private fun HomeScreenPreview() {
 @Composable
 private fun AddPlantFABPreview() {
     GardenBookTheme {
-        AddPlantFAB()
+        AddPlantFAB(
+            onPress = { }
+        )
     }
 
 }

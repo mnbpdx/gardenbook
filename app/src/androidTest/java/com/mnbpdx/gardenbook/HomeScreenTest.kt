@@ -1,10 +1,17 @@
 package com.mnbpdx.gardenbook
 
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.hasScrollAction
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollToIndex
+import com.mnbpdx.gardenbook.model.Location
+import com.mnbpdx.gardenbook.model.Plant
 import com.mnbpdx.gardenbook.model.plantList
-import com.mnbpdx.gardenbook.ui.home.HomeScreenContent
+import com.mnbpdx.gardenbook.ui.screens.home.HomeScreenContent
 import com.mnbpdx.gardenbook.ui.theme.GardenBookTheme
 import org.junit.Before
 import org.junit.Rule
@@ -16,15 +23,19 @@ class HomeScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private var clickedPlant: String? = null
+    private var clickedPlant: Int? = null
+    private var onAddPlantPressed = false
 
     @Before
     fun setUp() {
         clickedPlant = null
+        onAddPlantPressed = false
         composeTestRule.setContent {
             GardenBookTheme {
                 HomeScreenContent(
-                    onPlantCardPress = { plantName -> clickedPlant = plantName }
+                    onPlantCardPress = { id -> clickedPlant = id },
+                    onAddPlantPress = { onAddPlantPressed = true },
+                    plants = plantList
                 )
             }
         }
@@ -50,11 +61,11 @@ class HomeScreenTest {
         composeTestRule.onNodeWithText(plantList.first().name).performClick()
 
         // Verify that the callback was triggered with the correct plant name
-        assert(clickedPlant == plantList.first().name)
+        assert(clickedPlant == plantList.first().id)
     }
 
     @Test
-    fun homeScreen_scrolls() {
+    fun homeScreen_scrolls_to_the_bottom_of_the_list() {
         // Scroll the list to the end
         composeTestRule.onNode(hasScrollAction()).performScrollToIndex(plantList.size - 1)
 
@@ -66,5 +77,16 @@ class HomeScreenTest {
     fun homeScreen_bottomAppBarDisplayed() {
         // Verify that the bottom app bar is displayed
         composeTestRule.onNode(hasContentDescription("check mark icon")).assertIsDisplayed()
+    }
+
+    // lol idk bout these tests, they seem kinda dumb. eventually we should be doing
+    // more high level tests like navigation or user flows
+    @Test
+    fun homeScreen_fabPressed_triggersCallback() {
+        // Click on the floating action button
+        composeTestRule.onNode(hasContentDescription("add icon")).performClick()
+
+        // Verify that the callback was triggered
+        assert(onAddPlantPressed)
     }
 }

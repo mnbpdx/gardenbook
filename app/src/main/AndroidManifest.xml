@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Access user's coarse location. Can also enable _FINE_ location for high resolution data. -->
     <application
-        android:name=".ui.GardenBookApplication"
+        android:name=".di.GardenBookApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

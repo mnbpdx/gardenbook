@@ -1,4 +1,4 @@
-package com.mnbpdx.gardenbook.ui.loading
+package com.mnbpdx.gardenbook.ui.screens.loading
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
